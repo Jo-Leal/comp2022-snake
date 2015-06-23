@@ -23,8 +23,9 @@ public class Snake extends JPanel
     public Snake() {
         ImageIcon ii = new ImageIcon(snake);
         image = ii.getImage();
-        x = 40;
-        y = 60;
+        x = 850;
+        y = 650;
+        dir = 'O';
     }
     
     public void move() {

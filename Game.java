@@ -6,8 +6,8 @@ import javax.swing.*;
 public class Game extends JFrame
 {
 
-    private static int WIDTH = 800;
-    private static int HEIGHT = 600;
+    private static int WIDTH = 1000;
+    private static int HEIGHT = 750;
     
     
     public Game(){
@@ -24,7 +24,7 @@ public class Game extends JFrame
         // O titulo da janela
         setTitle("JALBERTONI");
         // Impede o redimensionamento da janela
-        setResizable(true);
+        setResizable(false);
         // Mostra a janela
         setVisible(true);
         

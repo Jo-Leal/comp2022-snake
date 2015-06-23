@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Body()
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Body\r\n
+comment1.params=proximo
+comment1.target=void\ setProximo(Body)
+comment2.params=
+comment2.target=Body\ getProximo()
+comment3.params=
+comment3.target=java.awt.Image\ getImage()
+comment4.params=x\ y\ g
+comment4.target=void\ desenhaCorpo(int,\ int,\ java.awt.Graphics)
+comment5.params=
+comment5.target=void\ move()
+numComments=6

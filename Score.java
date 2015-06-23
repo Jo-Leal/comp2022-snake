@@ -64,7 +64,7 @@ public class Score extends JPanel
         }catch (Exception e){
             System.out.println(e.toString());
         }
-        g2d.drawString("Score: " + this.score, 600, 50);
+        g2d.drawString("Score: " + this.score, 750, 63);
     }
 
     /**
@@ -80,4 +80,3 @@ public class Score extends JPanel
     }
     
 }
-
