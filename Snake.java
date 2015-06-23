@@ -11,24 +11,44 @@ import javax.swing.ImageIcon;
  */
 public class Snake extends JPanel
 {
-    private String snake = "head.png";
+    private String snake = "images/head.png";
 
     private int dx;
     private int dy;
     private int x;
     private int y;
     private Image image;
+    private char dir;
     
     public Snake() {
-        ImageIcon ii = new ImageIcon("images/"+this.getClass().getResource(snake));
+        ImageIcon ii = new ImageIcon(snake);
         image = ii.getImage();
         x = 40;
         y = 60;
     }
     
     public void move() {
-        x += dx;
-        y += dy;
+        switch(dir){
+            case 'N':
+                y = y - 1;
+                break;
+                
+            case 'S':
+                y = y + 1;
+                break;
+                
+            case 'O':
+                x = x - 1;
+                break;
+            
+            case 'L':
+                x = x + 1;
+                break;
+                
+            default:
+                break;
+                
+        }
     }
 
     public int getX() {
@@ -42,5 +62,17 @@ public class Snake extends JPanel
     public Image getImage() {
         return image;
     }
+    
+    public void desenhaCobra(Graphics g){
+        g.drawImage(getImage(),getX(),getY(), null);
+        
+    }
+    
+    public void setDir(char dir){
+        this.dir = dir;
+    }
+    
+    
 
 }
+

@@ -15,6 +15,7 @@ public class Board extends JPanel implements ActionListener {
 
     private Timer timer;
     private Score score;
+    private Snake snake;
     
     private boolean isPlaying = false;
 
@@ -29,7 +30,8 @@ public class Board extends JPanel implements ActionListener {
         setBackground(Color.WHITE);
 
         score = new Score();
-        add(score);       
+        snake = new Snake();
+               
         
         timer = new Timer(5, this);
         timer.start();
@@ -40,6 +42,7 @@ public class Board extends JPanel implements ActionListener {
         super.paint(g);
         
         score.paintComponent(g);
+        snake.desenhaCobra(g);
         
         Graphics2D g2d = (Graphics2D)g;        
 
@@ -62,7 +65,7 @@ public class Board extends JPanel implements ActionListener {
                 g2d.setFont(font);
             }catch (Exception e){
                 System.out.println(e.toString());
-            }   
+            } 
             g2d.drawString("S N A K E: " + this.score, 300, 300);
         }
     }
@@ -81,21 +84,26 @@ public class Board extends JPanel implements ActionListener {
 
             switch (key){
                 case KeyEvent.VK_ENTER:
-                    score.addScore(100);
                     break;
                     
                 case KeyEvent.VK_LEFT:
+                    snake.setDir('O');
+                    snake.move();
                     break;
                     
                 case KeyEvent.VK_RIGHT:
+                    snake.setDir('L');
+                    snake.move();
                     break;
                     
                 case KeyEvent.VK_UP:
-                    score.addScore(10);
+                    snake.setDir('N');
+                    snake.move();
                     break;
                     
                 case KeyEvent.VK_DOWN:
-                    score.subScore(-10);
+                    snake.setDir('S');
+                    snake.move();
                     break;
             }
             
