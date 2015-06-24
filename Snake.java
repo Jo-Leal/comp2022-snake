@@ -73,7 +73,10 @@ public class Snake extends JPanel
         this.dir = dir;
     }
     
+    public char getDir(){
+        return this.dir;
+    }
+    
     
 
 }
-
