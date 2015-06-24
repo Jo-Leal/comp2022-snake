@@ -79,4 +79,8 @@ public class Score extends JPanel
         doDrawing(g);
     }
     
+    public int getScore(){
+        return this.score;
+    }
+    
 }

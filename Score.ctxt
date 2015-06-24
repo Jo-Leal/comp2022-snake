@@ -14,4 +14,6 @@ comment3.text=\r\n\ Este\ m\u00E9todo\ desenha\ o\ score\ \r\n\ \r\n\ @param\ \ 
 comment4.params=g
 comment4.target=void\ paintComponent(java.awt.Graphics)
 comment4.text=\r\n\ Override\ do\ m\u00E9todo\ que\ pinta\ este\ componente,\ pois\ ele\ \u00E9\ um\ JPanel.\r\n\ \r\n\ @param\ \ Graphics\ g\ \ \ \ \r\n\ @return\ \ \ \ \ void\r\n
-numComments=5
+comment5.params=
+comment5.target=int\ getScore()
+numComments=6

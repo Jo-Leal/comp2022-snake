@@ -20,6 +20,8 @@ public class Board extends JPanel implements ActionListener {
     private Batata batata;
     
     private boolean isPlaying = false;
+    private boolean endOfGame = false;
+    private boolean intro = true;
 
     private Font font;
        
@@ -45,7 +47,22 @@ public class Board extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g);
         
+        if(intro){
+            paintIntro(g);
+        }
         
+        if(endOfGame){
+            gameOver(g);
+        }
+        
+        if(isPlaying){
+            newGame(g);
+        }
+        
+        
+    }
+    
+    public void newGame(Graphics g){
         score.paintComponent(g);
         snake.desenhaCobra(g);
         lista.desenhaLista(snake.getX()+55, snake.getY(),g);
@@ -59,17 +76,20 @@ public class Board extends JPanel implements ActionListener {
         }
         //lista.moverLista();
         
+        if(bateu()){
+            isPlaying = false;
+            endOfGame = true;
+        }
         
         Graphics2D g2d = (Graphics2D)g;        
 
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
-        
     }
 
 
     public void paintIntro(Graphics g) {
-        if(isPlaying){
+        if((!isPlaying)&&(!endOfGame)){
             isPlaying = false;
             Graphics2D g2d = (Graphics2D) g;
             try{
@@ -82,7 +102,8 @@ public class Board extends JPanel implements ActionListener {
             }catch (Exception e){
                 System.out.println(e.toString());
             } 
-            g2d.drawString("S N A K E: " + this.score, 300, 300);
+            g2d.drawString("S N A K E", 300, 300);
+            g2d.drawString("Press Enter to start", 400, 400);
         }
     }
     
@@ -102,6 +123,35 @@ public class Board extends JPanel implements ActionListener {
         }
     }
     
+    public boolean bateu(){
+        if((snake.getX() <= 0)||(snake.getY() <= 0)){
+            return true;
+        }else if((snake.getX() >= 1000)||(snake.getY() >= 750)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public void gameOver(Graphics g){
+        if((!isPlaying)&&(!intro)){
+            isPlaying = false;
+            Graphics2D g2d = (Graphics2D) g;
+            try{
+                File file = new File("fonts/VT323-Regular.ttf");
+                font = Font.createFont(Font.TRUETYPE_FONT, file);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(font);
+                font = font.deriveFont(Font.PLAIN,40);
+                g2d.setFont(font);
+            }catch (Exception e){
+                System.out.println(e.toString());
+            } 
+            g2d.drawString("GAME OVER", 300, 300);
+            int y = score.getScore();
+            g2d.drawString("Seu score foi: "+ y, 400, 400);
+        }
+    }
     
     private class TAdapter extends KeyAdapter {
 
@@ -112,9 +162,13 @@ public class Board extends JPanel implements ActionListener {
 
             switch (key){
                 case KeyEvent.VK_ENTER:
-                    isPlaying = false;
+                    if(intro){
+                        isPlaying = true;
+                        endOfGame = false;
+                        intro = false;
+                    }
                     break;
-                    
+                 
                 case KeyEvent.VK_LEFT:
                     if(snake.getDir() != 'L'){
                         snake.setDir('O');
