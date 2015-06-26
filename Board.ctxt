@@ -15,4 +15,6 @@ comment6.params=
 comment6.target=boolean\ bateu()
 comment7.params=g
 comment7.target=void\ gameOver(java.awt.Graphics)
-numComments=8
+comment8.params=
+comment8.target=void\ collision()
+numComments=9

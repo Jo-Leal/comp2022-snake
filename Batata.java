@@ -27,8 +27,8 @@ public class Batata
         ImageIcon bb = new ImageIcon(batata);
         comida = bb.getImage();
         num = new Random();
-        this.x = num.nextInt(950);
-        this.y = num.nextInt(700);
+        this.x = num.nextInt(947)+3;
+        this.y = num.nextInt(720)+3;
     }
 
     public Image getImage(){

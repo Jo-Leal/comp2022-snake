@@ -39,7 +39,7 @@ public class Board extends JPanel implements ActionListener {
         batata = new Batata();
                
         
-        timer = new Timer(5, this);
+        timer = new Timer(100, this);
         timer.start();
     }
 
@@ -65,8 +65,10 @@ public class Board extends JPanel implements ActionListener {
     public void newGame(Graphics g){
         score.paintComponent(g);
         snake.desenhaCobra(g);
-        lista.desenhaLista(snake.getX()+55, snake.getY(),g);
+        lista.desenhaLista(snake.getDX(), snake.getDY(),g, snake.getDir());
         batata.desenhaComida(g);
+        
+        Graphics2D g2d = (Graphics2D)g;
         
         snake.move();
         if(comeu()){
@@ -80,8 +82,9 @@ public class Board extends JPanel implements ActionListener {
             isPlaying = false;
             endOfGame = true;
         }
+        collision();
         
-        Graphics2D g2d = (Graphics2D)g;        
+                
 
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
@@ -111,22 +114,20 @@ public class Board extends JPanel implements ActionListener {
         repaint();  
     }
     
+    
     public boolean comeu(){
-        if((batata.getX()-5 <= snake.getX())&&(batata.getY()-5 <= snake.getY())){
-               if((snake.getX() <= batata.getX()+33)&&(snake.getY() <= batata.getY()+15)){
-                   return true;
-                }else{
-                   return false; 
-                }
-        }else{
-               return false;
-        }
+        if(((snake.getX() <= batata.getX()+20) && (snake.getX() >= batata.getX()-20)) &&
+     	       ((snake.getY() <= batata.getY()+20) && (snake.getY() >= batata.getY()-20))){
+     	           return true;
+     	}else {
+     	    return false;
+     	  }
     }
     
     public boolean bateu(){
         if((snake.getX() <= 0)||(snake.getY() <= 0)){
             return true;
-        }else if((snake.getX() >= 1000)||(snake.getY() >= 750)){
+        }else if((snake.getX() >= 945)||(snake.getY() >= 695)){
             return true;
         }else{
             return false;
@@ -152,6 +153,28 @@ public class Board extends JPanel implements ActionListener {
             g2d.drawString("Seu score foi: "+ y, 400, 400);
         }
     }
+    
+    public void collision(){
+        if(lista.getSize() > 2){
+            Body aux = lista.getInicio().getProximo();
+            if(aux.getProximo() != null){
+                aux = aux.getProximo();
+                while(aux.getProximo() != null){
+                    /*if(cobra.getX() == corpo.getX() && cobra.getY() == corpo.getY()){*/
+                  
+                
+                    if(((snake.getX() <= aux.getX()+10) && (snake.getX() >= aux.getX()-10)) &&
+                        ((snake.getY() <= aux.getY()+10) && (snake.getY() >= aux.getY()-10))){
+                            isPlaying = false;
+                            endOfGame = true;
+                            intro = false;
+                            break;
+                        }
+                        aux = aux.getProximo();   
+                    } 
+                }
+         } 
+     }
     
     private class TAdapter extends KeyAdapter {
 

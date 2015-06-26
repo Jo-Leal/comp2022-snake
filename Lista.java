@@ -20,24 +20,24 @@ public class Lista
      */
     public Lista()
     {
-        this.inicio = new Body();
         
-        inicio.setProximo(new Body());
-        inicio.getProximo().setProximo(inicio);
     }
     
     public void inserir(Body body){
         if(isEmpty()){
             inicio = body;
-            body.setProximo(inicio);
         }else{
             Body aux = inicio;
-            while(aux.getProximo() != inicio){
+            while(aux.getProximo() != null){
                 aux = aux.getProximo();
             }
             aux.setProximo(body);
-            body.setProximo(inicio);
+            body.setAnterior(aux);
         }
+    }
+    
+    public Body getInicio(){
+        return this.inicio;
     }
     
     public boolean isEmpty(){
@@ -49,50 +49,49 @@ public class Lista
     }
     
     public int getSize(){
-        int x = 1;
-        Body aux = inicio;
-        while(aux.getProximo() != inicio){
-            aux = aux.getProximo();
-            x++;
+        if(!isEmpty()){
+            int x = 1;
+            Body aux = inicio;
+            while(aux.getProximo() != null){
+                aux = aux.getProximo();
+                x++;
+            }
+            return x;
+        }else{
+            return 0;
         }
-        return x;
-        
     }
     
-    public void desenhaLista(int a, int y, Graphics g){
-        Body aux = inicio;
-        int x = 1;
-        Body [] kids = new Body [getSize()];
-        while(x <= getSize()){
-            aux.desenhaCorpo(a, y, g);
-            aux = aux.getProximo();
-            a = a + 33;
-            x++;
-            /*kids[x-1] = aux;
-            aux = aux.getProximo();
-            x++;*/
-        }
-        
-        /*for(int i = 0; i < kids.length; i++){
-            kids[i].desenhaCorpo(a, y, g);
-            a = a + 33;
-        }*/
+    
+    public void desenhaLista(int a, int y, Graphics g, char dir){
+        if(!isEmpty()){
+            inicio.atualizaDX();
+            inicio.atualizaDY();
+            inicio.setX(a);
+            inicio.setY(y);
+            inicio.setDdir();
+            inicio.setDir(dir);
+            inicio.atualiza();
+            inicio.desenhaCorpo(g); 
+            
+            Body aux = inicio.getProximo();
+            int x = 2;
+            while(x <= getSize()){
+                aux.atualizaDX();
+                aux.atualizaDY();
+                aux.setX(aux.anterior.getDX());
+                aux.setY(aux.anterior.getDY());
+                aux.setDdir();
+                aux.setDir(aux.anterior.getDdir());
+                aux.atualiza();
+                
+                aux.desenhaCorpo(g);
+                aux = aux.getProximo();
+                x++;
+                
+                }
+             
+       }
     }
     
-    public void moverLista(){
-        Body aux = inicio;
-        int x = 1;
-        Body [] kids = new Body [getSize()];
-        while(x <= getSize()){
-            kids[x-1] = aux;
-            aux = aux.getProximo();
-            x++;
-        }
-        
-        for(int i = 0; i < kids.length; i++){
-            kids[i].move();
-        }
-    }
-
-  
 }

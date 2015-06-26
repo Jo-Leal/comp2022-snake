@@ -12,13 +12,17 @@ import javax.swing.ImageIcon;
  */
 public class Body
 {
-    // instance variables - replace the example below with your own
+    
     private String name_body = "images/body.png";
     private Image body;
     private Body proximo;
     private int x;
     private int y;
     private char dir;
+    private int dx;
+    private int dy;
+    public Body anterior;
+    private char Ddir;
 
     /**
      * Constructor for objects of class Body
@@ -38,30 +42,94 @@ public class Body
         return this.proximo;
     }
     
+    public void setAnterior(Body anterior){
+        this.anterior = anterior;
+    }
+    
+    public Body getAnterior(){
+        return this.anterior;
+    }
+    
     public Image getImage(){
         return this.body;
     }
     
-    public void desenhaCorpo(int x ,int y, Graphics g){
+    public int getDX(){
+        return this.dx;
+    }
+    
+    public int getDY(){
+        return this.dy;
+    }
+    
+    public void setX(int x){
+        this. x = x;
+    }
+    
+    public void setY(int y){
+        this.y = y;
+    }
+    
+    public void atualizaDX(){
+        dx = x;
+    }
+    
+    public void atualizaDY(){
+        dy = y;
+    }
+    
+    public void atualizaX(){
+        x = anterior.dx;
+    }
+    
+    public void atualizaY(){
+        y = anterior.dy;
+    }
+    
+    public void desenhaCorpo(Graphics g){
         g.drawImage(getImage(), x, y, null);
     }
+    
+    public int getX(){
+        return this.x;
+    }
+    
+    public int getY(){
+        return this.y;
+    }
+    
+    public void setDdir(){
+        Ddir = dir;
+    }
+    
+    public void setDir(char dir){
+        this.dir = dir;
+    }
+    
+    public char getDdir(){
+        return this.Ddir;
+    }
 
-    public void move(){
+    public void atualiza(){
         switch(dir){
             case 'N':
-                y = y - 1;
+                ImageIcon aa = new ImageIcon("images/body_subindo.png");
+                body = aa.getImage();
                 break;
                 
             case 'S':
-                y = y + 1;
+                ImageIcon ii = new ImageIcon("images/body_descendo.png");
+                body = ii.getImage();
                 break;
                 
             case 'O':
-                x = x - 1;
+                ImageIcon oo = new ImageIcon(name_body);
+                body = oo.getImage();
                 break;
             
             case 'L':
-                x = x + 1;
+                ImageIcon uu = new ImageIcon("images/body_direita.png");
+                body = uu.getImage();
                 break;
                 
             default:

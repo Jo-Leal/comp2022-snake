@@ -19,6 +19,7 @@ public class Snake extends JPanel
     private int y;
     private Image image;
     private char dir;
+    private char Ddir;
     
     public Snake() {
         ImageIcon ii = new ImageIcon(snake);
@@ -31,19 +32,35 @@ public class Snake extends JPanel
     public void move() {
         switch(dir){
             case 'N':
-                y = y - 1;
+                ImageIcon ii = new ImageIcon("images/head_subindo.png");
+                image = ii.getImage();  
+                dx = x;
+                dy = y;
+                y = y - 20;
                 break;
                 
             case 'S':
-                y = y + 1;
+                ImageIcon aa = new ImageIcon("images/head_descendo.png");
+                image = aa.getImage();
+                dx = x;
+                dy = y;
+                y = y + 20;
                 break;
                 
             case 'O':
-                x = x - 1;
+                ImageIcon oo = new ImageIcon(snake);
+                image = oo.getImage();
+                dx = x;
+                dy = y;
+                x = x - 20;
                 break;
             
             case 'L':
-                x = x + 1;
+                ImageIcon yy = new ImageIcon("images/head_direita.png");
+                image = yy.getImage();
+                dx = x;
+                dy = y;
+                x = x + 20;
                 break;
                 
             default:
@@ -77,6 +94,16 @@ public class Snake extends JPanel
         return this.dir;
     }
     
+    public int getDX(){
+        return this.dx;
+    }
     
-
+    public int getDY(){
+        return this.dy;
+    }
+    
+    public char getDdir(){
+        return this.Ddir;
+    }
+    
 }
