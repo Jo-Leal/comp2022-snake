@@ -22,6 +22,7 @@ public class Board extends JPanel implements ActionListener {
     private boolean isPlaying = false;
     private boolean endOfGame = false;
     private boolean intro = true;
+    private boolean pause = false;
 
     private Font font;
        
@@ -33,14 +34,18 @@ public class Board extends JPanel implements ActionListener {
         setDoubleBuffered(true);
         setBackground(Color.WHITE);
 
+        novo();
+               
+        
+        timer = new Timer(110, this);
+        timer.start();
+    }
+    
+    public void novo(){
         score = new Score();
         snake = new Snake();
         lista = new Lista();
         batata = new Batata();
-               
-        
-        timer = new Timer(100, this);
-        timer.start();
     }
 
 
@@ -57,6 +62,10 @@ public class Board extends JPanel implements ActionListener {
         
         if(isPlaying){
             newGame(g);
+        }
+        
+        if(pause){
+            pausado(g);
         }
         
         
@@ -107,6 +116,7 @@ public class Board extends JPanel implements ActionListener {
             } 
             g2d.drawString("S N A K E", 300, 300);
             g2d.drawString("Press Enter to start", 400, 400);
+            g2d.drawString("By: Jonathan Albertoni", 50, 700);
         }
     }
     
@@ -151,6 +161,8 @@ public class Board extends JPanel implements ActionListener {
             g2d.drawString("GAME OVER", 300, 300);
             int y = score.getScore();
             g2d.drawString("Seu score foi: "+ y, 400, 400);
+            g2d.drawString("Press Space to back to menu", 100, 700);
+            g2d.drawString("Press Enter to retry", 100, 650);
         }
     }
     
@@ -175,6 +187,29 @@ public class Board extends JPanel implements ActionListener {
                 }
          } 
      }
+     
+    public void pausado(Graphics g){
+        if((!isPlaying)&&(!intro)&&(!endOfGame)){
+            isPlaying = false;
+            Graphics2D g2d = (Graphics2D) g;
+            try{
+                File file = new File("fonts/VT323-Regular.ttf");
+                font = Font.createFont(Font.TRUETYPE_FONT, file);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(font);
+                font = font.deriveFont(Font.PLAIN,40);
+                g2d.setFont(font);
+            }catch (Exception e){
+                System.out.println(e.toString());
+            } 
+            g2d.drawString("GAME PAUSED", 300, 300);
+            int y = score.getScore();
+            g2d.drawString("Current Score: "+ y, 400, 400);
+            g2d.drawString("Press P to back to play", 100, 600);
+            g2d.drawString("Press Space to back to menu", 100, 700);
+            g2d.drawString("Press Enter for a new game", 100, 650);
+        }
+    }
     
     private class TAdapter extends KeyAdapter {
 
@@ -189,9 +224,51 @@ public class Board extends JPanel implements ActionListener {
                         isPlaying = true;
                         endOfGame = false;
                         intro = false;
+                    }else if(endOfGame){
+                        novo();
+                        isPlaying = true;
+                        endOfGame = false;
+                        intro = false;
+                        pause = false;
+                    }else if(pause){
+                        novo();
+                        isPlaying = true;
+                        endOfGame = false;
+                        intro = false;
+                        pause = false;
                     }
                     break;
-                 
+                    
+                case KeyEvent.VK_SPACE:
+                    if(endOfGame){
+                        novo();
+                        isPlaying = false;
+                        endOfGame = false;
+                        intro = true;
+                        pause = false;
+                    }else if(pause){
+                        novo();
+                        isPlaying = false;
+                        endOfGame = false;
+                        intro = true;
+                        pause = false;
+                    }
+                    break;
+                    
+                case KeyEvent.VK_P:
+                    if(isPlaying){
+                        isPlaying = false;
+                        endOfGame = false;
+                        intro = false;
+                        pause = true;
+                    }else if(pause){
+                        isPlaying = true;
+                        endOfGame = false;
+                        intro = false;
+                        pause = false;
+                    }
+                    break;        
+                    
                 case KeyEvent.VK_LEFT:
                     if(snake.getDir() != 'L'){
                         snake.setDir('O');
